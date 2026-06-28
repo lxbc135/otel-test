@@ -13,5 +13,5 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [debug]
       processors: []
+      exporters: [debug]

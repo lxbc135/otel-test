@@ -1,5 +1,5 @@
-# Minimal config with health check and zpages.
-# Requires collector contrib or custom collector for health check extension.
+# Minimal config with health check and zpages diagnostics.
+# Requires otel collector contrib or custom collector for health check extension.
 extensions:
   health_check:
     endpoint: "0.0.0.0:13133"
@@ -21,5 +21,5 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [debug]
       processors: []
+      exporters: [debug]
