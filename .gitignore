@@ -1,0 +1,41 @@
+
+# node.js
+node_modules
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ==========================================
+# Byte-compiled / optimized / DLL files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+# Additional tools
+.env/
+.venv*/
+virtualenv/
+
+# ==========================================
+# Sensitive Data / Configuration
+# ==========================================
+.env
+.env.*
+*.secret
+instance/
+secrets.json

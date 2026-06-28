@@ -1,0 +1,14 @@
+{
+  "name": "otel-test",
+  "version": "1.0.0",
+  "description": "OpenTelemetry test",
+  "main": "index.js",
+  "author": "lxbc135 <93529090+lxbc135@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.219.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.219.0",
+    "@opentelemetry/sdk-node": "^0.219.0"
+  }
+}
