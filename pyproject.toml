@@ -1,0 +1,11 @@
+[project]
+name = "otel-test"
+version = "0.1.0"
+description = "OpenTelemetry test"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "opentelemetry-api>=1.43.0",
+    "opentelemetry-exporter-otlp>=1.43.0",
+    "opentelemetry-sdk>=1.43.0",
+]
