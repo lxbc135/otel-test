@@ -9,3 +9,8 @@ dependencies = [
     "opentelemetry-exporter-otlp>=1.43.0",
     "opentelemetry-sdk>=1.43.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.411",
+]
