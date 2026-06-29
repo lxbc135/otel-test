@@ -1,4 +1,11 @@
-# config with filelog receiver.
+# OpenTelemery collector config
+#
+# - extensions: health_check, zpages
+# - receiver: filelog
+# - processor:
+#   - batch_memory limits
+#   - custom attributes (metadata), resources
+# - exporter: debug
 extensions:
   health_check:
     endpoint: "0.0.0.0:13133"

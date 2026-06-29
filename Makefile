@@ -12,6 +12,8 @@ stop-all:
 health:
 	curl http://localhost:13133/health
 
-# Output: log entry for filelog reciver test
+# Output log entry for filelog reciver test
 test-log:
+	echo "$$(date +%Y-%m-%dT%H:%M:%S) DEBUG test debug message" >> $$HOME/logs/test.log
 	echo "$$(date +%Y-%m-%dT%H:%M:%S) INFO test info message" >> $$HOME/logs/test.log
+	echo "$$(date +%Y-%m-%dT%H:%M:%S) ERROR test error message" >> $$HOME/logs/test.log
