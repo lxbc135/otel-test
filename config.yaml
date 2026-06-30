@@ -43,7 +43,7 @@ processors:
   filter/drop_debug_logs:
     logs:
       log_record:
-        - attributes["log.severity"] == "DEBUG"
+        - severity_text == "DEBUG"
 
   batch:
     timeout: 5s
