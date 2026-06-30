@@ -5,6 +5,7 @@ const exporter = new OTLPTraceExporter({
   timeoutMillis: 5000 // 5 seconds timeout
 });
 const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
-const provider = new NodeTracerProvider();
-provider.addSpanProcessor(new BatchSpanProcessor(exporter));
+const provider = new NodeTracerProvider({
+  spanProcessors: [new BatchSpanProcessor(exporter)]
+});
 provider.register();
