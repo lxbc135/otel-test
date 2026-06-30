@@ -14,17 +14,17 @@ extensions:
     endpoint: "0.0.0.0:55679"
 
 receivers:
-  filelog:
-    include: [/var/log/myapp/test.log]
-    start_at: end
-    operators:
-    - type: regex_parser
-      regex: '^(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}) (?P<severity>[A-Z]*) (?P<msg>.*)$'
-      timestamp:
-        parse_from: attributes.timestamp
-        layout: '%Y-%m-%dT%H:%M:%S'
-      severity:
-        parse_from: attributes.severity
+  # filelog:
+  #   include: [/var/log/myapp/test.log]
+  #   start_at: end
+  #   operators:
+  #   - type: regex_parser
+  #     regex: '^(?P<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}) (?P<severity>[A-Z]*) (?P<msg>.*)$'
+  #     timestamp:
+  #       parse_from: attributes.timestamp
+  #       layout: '%Y-%m-%dT%H:%M:%S'
+  #     severity:
+  #       parse_from: attributes.severity
   otlp:
     protocols:
       grpc:
@@ -39,7 +39,6 @@ processors:
     traces:
       span:
         - name == "/health"
-        - name == "/metrics"
   filter/drop_debug_logs:
     logs:
       log_record:
@@ -93,6 +92,7 @@ service:
       processors: [memory_limiter, resource/add_service_info, attributes/add_metadata, batch]
       exporters: [debug]
     logs:
-      receivers: [filelog]
+      # receivers: [filelog]
+      receivers: [otlp]
       processors: [filter/drop_debug_logs, batch, memory_limiter, resource/add_service_info, attributes/add_metadata]
       exporters: [debug]
