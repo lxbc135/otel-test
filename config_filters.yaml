@@ -1,10 +1,11 @@
-# OpenTelemery collector config
+# OpenTelemery collector config - filter out noisy spans and logs
+# Add processors: filter out /health and /metrics trace spans, DEBUG log
 #
+# Also:
 # - extensions: health_check, zpages
 # - receiver: filelog
 # - processor:
 #   - batch_memory limits
-#   - filter out noisy spans and logs
 #   - custom attributes (metadata), resources
 # - exporter: debug
 extensions:

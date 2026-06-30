@@ -12,6 +12,9 @@ stop-all:
 health:
 	curl http://localhost:13133/health
 
+send-metrics:
+	uv run python example_custom_metrics.py
+
 # Output log entry for filelog reciver test
 test-log:
 	echo "$$(date +%Y-%m-%dT%H:%M:%S) DEBUG test debug message" >> $$HOME/logs/test.log
