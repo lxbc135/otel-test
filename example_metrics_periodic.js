@@ -1,7 +1,7 @@
 const { MeterProvider, PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 const { OTLPMetricExporter } = require('@opentelemetry/exporter-metrics-otlp-http');
 
-const exporter = new OTLPMetricExporter({ url: 'http://localhost:4318/v1/metrics' });
+const exporter = new OTLPMetricExporter({ url: 'http://127.0.0.1:4318/v1/metrics' });
 const reader = new PeriodicExportingMetricReader({ exporter, exportIntervalMillis: 5000 });
 const meterProvider = new MeterProvider({ readers: [reader] });
 

@@ -11,7 +11,7 @@ const exporter = new OTLPLogExporter({
 // Alternative for HTTP:
 // const { OTLPLogExporter } = require('@opentelemetry/exporter-logs-otlp-http');
 // const exporter = new OTLPLogExporter({
-//   url: 'http://localhost:4318/v1/logs',
+//   url: 'http://127.0.0.1:4318/v1/logs',
 // });
 
 // 2. Initialize the Logger Provider with the processor

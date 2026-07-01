@@ -8,16 +8,16 @@ from opentelemetry._logs.severity import SeverityNumber
 logger_provider = LoggerProvider()
 
 # 2. Configure the OTLP Log Exporter pointing to the OpenTelemetry Collector
-# Default OTLP gRPC endpoint is localhost:4317
+# Default OTLP gRPC endpoint is 127.0.0.1:4317
 exporter = OTLPLogExporter(
-    endpoint="localhost:4317",
+    endpoint="127.0.0.1:4317",
     insecure=True
 )
 
 # Alternative for HTTP:
 # from opentelemetry.exporter.otlp.proto.http._log_exporter import OTLPLogExporter
 # exporter = OTLPLogExporter(
-#     endpoint="http://localhost:4318/v1/logs"
+#     endpoint="http://127.0.0.1:4318/v1/logs"
 # )
 
 # 3. Add the processor with the configured exporter to the provider
