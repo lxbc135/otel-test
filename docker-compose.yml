@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # 1. OpenTelemetry Collector
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC receiver
+      - "4318:4318" # OTLP HTTP receiver
+    depends_on:
+      - prometheus
+      - tempo
+
+  # 2. Prometheus (Metrics Storage)
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  # 3. Tempo (Traces Storage)
+  tempo:
+    image: grafana/tempo:latest
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - inline-tempo-config:/etc/tempo.yaml
+    ports:
+      - "3200:3200" # Tempo UI/API
+
+  # 4. Grafana (Dashboard)
+  grafana:
+    image: grafana/grafana-oss:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - inline-grafana-datasources:/etc/grafana/provisioning/datasources
+
+volumes:
+  # Inline volume trick to avoid creating extra small configuration files manually
+  inline-tempo-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: .
+  inline-grafana-datasources:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: .
