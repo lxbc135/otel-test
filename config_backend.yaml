@@ -13,6 +13,7 @@ processors:
   batch:
 
 exporters:
+  # for viewing messages in console
   debug:
     verbosity: detailed # basic, normal, detailed
 

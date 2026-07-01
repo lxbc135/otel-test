@@ -7,9 +7,12 @@ start:
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
 
+# Create user-defined network for collector gateway -> backend pipeline
+network:
+	docker network create otel-network 2>/dev/null || true
+
 # Start gateway/proxy collector (sender) in collector pipeline
 start-gateway:
-	docker network create otel-network 2>/dev/null || true
 	docker run --rm \
 		--network otel-network \
 		--name collector_gateway \
@@ -21,7 +24,6 @@ start-gateway:
 
 # Start backend collector (receiver) in collector pipeline
 start-backend:
-	docker network create otel-network 2>/dev/null || true
 	docker run --rm \
 		--network otel-network \
 		--name collector_backend \
@@ -35,7 +37,7 @@ stop-all:
 	docker stop $$(docker ps -q)
 
 health:
-	curl http://localhost:13133/health
+	curl http://127.0.0.1:13133/health
 
 send-metrics:
 	uv run python example_custom_metrics.py

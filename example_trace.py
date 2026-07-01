@@ -8,7 +8,7 @@ provider = SDKTracerProvider(
     resource=Resource.create({"service.name": "sample-python-service"})
 )
 otlp_exporter = OTLPSpanExporter(
-    endpoint="localhost:4317",  # Collector OTLP gRPC endpoint
+    endpoint="127.0.0.1:4317",  # Collector OTLP gRPC endpoint
     insecure=True               # Use insecure if no TLS
 )
 span_processor = BatchSpanProcessor(otlp_exporter)

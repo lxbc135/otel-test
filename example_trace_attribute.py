@@ -6,7 +6,7 @@ from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExport
 
 # 1. Configure the OTLP trace exporter pointing to the local OTel Collector (gRPC default)
 exporter = OTLPSpanExporter(
-    endpoint="localhost:4317",
+    endpoint="127.0.0.1:4317",
     insecure=True
 )
 

@@ -3,7 +3,7 @@ from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.exporter.otlp.proto.grpc.metric_exporter import OTLPMetricExporter
 from opentelemetry.metrics import set_meter_provider
 
-exporter = OTLPMetricExporter(endpoint="localhost:4317", insecure=True)
+exporter = OTLPMetricExporter(endpoint="127.0.0.1:4317", insecure=True)
 reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
 provider = MeterProvider(metric_readers=[reader])
 set_meter_provider(provider)

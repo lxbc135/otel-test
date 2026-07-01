@@ -9,7 +9,7 @@ provider = SDKTracerProvider(
     resource=Resource.create({"service.name": "sample-python-service"})
 )
 otlp_exporter = OTLPSpanExporter(
-    endpoint="localhost:4317",  # Collector OTLP gRPC endpoint
+    endpoint="127.0.0.1:4317",  # Collector OTLP gRPC endpoint
     insecure=True,              # Use insecure if no TLS
     timeout=5,                  # Custom timeout in seconds
     retryable_error_codes=[     # Custom retryable gRPC error codes

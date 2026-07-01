@@ -3,9 +3,9 @@ const { OTLPLogExporter } = require('@opentelemetry/exporter-logs-otlp-grpc');
 const { SeverityNumber } = require('@opentelemetry/api-logs');
 
 // 1. Configure the OTLP Log Exporter pointing to the OpenTelemetry Collector
-// Default OTLP gRPC endpoint is http://localhost:4317
+// Default OTLP gRPC endpoint is http://127.0.0.1:4317
 const exporter = new OTLPLogExporter({
-  url: 'http://localhost:4317',
+  url: 'http://127.0.0.1:4317',
 });
 
 // Alternative for HTTP:

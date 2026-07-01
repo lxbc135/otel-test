@@ -5,7 +5,7 @@ const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc')
 
 // 1. Configure the OTLP exporter pointing to your local OTel Collector (default gRPC port)
 const exporter = new OTLPTraceExporter({
-  url: 'http://localhost:4317',
+  url: 'http://127.0.0.1:4317',
 });
 
 // 2. Initialize the Tracer Provider with the configured span processor
