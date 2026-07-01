@@ -1,0 +1,32 @@
+# Backend Collector (Receiver) in collector pipeline
+receivers:
+  # This listens for the data coming from Collector 1
+  otlp:
+    protocols:
+      grpc:
+        # add "10" prefix to normal ports
+        endpoint: "0.0.0.0:14317"
+      http:
+        endpoint: "0.0.0.0:14318"
+
+processors:
+  batch:
+
+exporters:
+  debug:
+    verbosity: detailed # basic, normal, detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
