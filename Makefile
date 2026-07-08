@@ -16,33 +16,45 @@ start:
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
 
-# Create user-defined network for collector gateway -> backend pipeline
+start:
+	docker run --rm \
+		--add-host host.docker.internal:host-gateway \
+		-v $$(pwd)/config.yaml:/etc/otelcol/config.yaml \
+		-v $$HOME/logs:/var/log/otelcol \
+		-p 4317:4317 -p 4318:4318 \
+		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
+		--config /etc/otelcol/config.yaml
+
+log-dir:
+	mkdir -p $$HOME/logs
+
+# Create user-defined network for collector proxy -> backend pipeline
 network:
 	docker network create otel-network 2>/dev/null || true
 
-# Start gateway/proxy collector (sender) in collector pipeline
-start-gateway:
+# Start proxy collector (sender) in collector pipeline
+start-proxy: log-dir network
 	docker run --rm \
 		--network otel-network \
-		--name collector_gateway \
-		-v $$(pwd)/config_gateway.yaml:/etc/otelcol/config.yaml \
-		-v $$HOME/logs:/var/log/myapp \
+		--name collector_proxy \
+		-v $$(pwd)/config_proxy.yaml:/etc/otelcol/config.yaml \
+		-v $$HOME/logs:/var/log/otelcol \
 		-p 4317:4317 -p 4318:4318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
 
 # Start backend collector (receiver) in collector pipeline
-start-backend:
+start-backend: log-dir network
 	docker run --rm \
 		--network otel-network \
 		--name collector_backend \
 		-v $$(pwd)/config_backend.yaml:/etc/otelcol/config.yaml \
-		-v $$HOME/logs:/var/log/myapp \
+		-v $$HOME/logs:/var/log/otelcol \
 		-p 14317:14317 -p 14318:14318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
 
-stop-all:
+stop:
 	docker stop $$(docker ps -q)
 
 health:
