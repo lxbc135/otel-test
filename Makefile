@@ -1,8 +1,17 @@
+nerd:
+	nerdctl run --rm \
+		--add-host host.docker.internal:host-gateway \
+		-v $$(pwd)/config.yaml:/etc/otelcol/config.yaml \
+		-v $$HOME/logs:/var/log/myapp \
+		-p 4317:4317 -p 4318:4318 \
+		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
+		--config /etc/otelcol/config.yaml
+
 start:
 	docker run --rm \
 		--add-host host.docker.internal:host-gateway \
 		-v $$(pwd)/config.yaml:/etc/otelcol/config.yaml \
-		-v /home/joseph/logs:/var/log/myapp \
+		-v $$HOME/logs:/var/log/myapp \
 		-p 4317:4317 -p 4318:4318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
@@ -17,7 +26,7 @@ start-gateway:
 		--network otel-network \
 		--name collector_gateway \
 		-v $$(pwd)/config_gateway.yaml:/etc/otelcol/config.yaml \
-		-v /home/joseph/logs:/var/log/myapp \
+		-v $$HOME/logs:/var/log/myapp \
 		-p 4317:4317 -p 4318:4318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
@@ -28,7 +37,7 @@ start-backend:
 		--network otel-network \
 		--name collector_backend \
 		-v $$(pwd)/config_backend.yaml:/etc/otelcol/config.yaml \
-		-v /home/joseph/logs:/var/log/myapp \
+		-v $$HOME/logs:/var/log/myapp \
 		-p 14317:14317 -p 14318:14318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
