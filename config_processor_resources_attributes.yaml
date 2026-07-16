@@ -26,10 +26,19 @@ receivers:
     protocols:
       grpc:
         endpoint: 0.0.0.0:4317
+        include_metadata: true # MANDATORY: Allows reading client IPs
       http:
         endpoint: 0.0.0.0:4318
+        include_metadata: true
 
 processors:
+  # Bind the network client address to a standard trace/log attribute
+  attributes/extract_ip:
+    actions:
+      - key: client.address
+        action: insert
+        from_context: "client.address"
+
   attributes/add_metadata:
     actions:
       - key: deployment.environment
@@ -63,13 +72,13 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [resource/add_service_info, attributes/add_metadata]
+      processors: [resource/add_service_info, attributes/extract_ip, attributes/add_metadata]
       exporters: [debug]
     metrics:
       receivers: [otlp]
-      processors: [resource/add_service_info, attributes/add_metadata]
+      processors: [resource/add_service_info, attributes/extract_ip, attributes/add_metadata]
       exporters: [debug]
     logs:
-      receivers: [filelog]
-      processors: [resource/add_service_info, attributes/add_metadata]
+      receivers: [filelog, otlp]
+      processors: [resource/add_service_info, attributes/extract_ip, attributes/add_metadata]
       exporters: [debug]

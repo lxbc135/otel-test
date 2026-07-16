@@ -70,10 +70,9 @@ async function sendLogs() {
   console.log("-> Sent DEBUG log: 'Loading local configuration parameters' (Expect collector to drop this)");
 
   // Flush and shutdown to ensure all log records are fully sent
-  setTimeout(async () => {
-    await loggerProvider.shutdown();
-    console.log("Logger Provider shut down. Done.");
-  }, 2000);
+  await loggerProvider.forceFlush();
+  await loggerProvider.shutdown();
+  console.log("Logger Provider shut down. Done.");
 }
 
 sendLogs().catch(console.error);

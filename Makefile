@@ -7,10 +7,14 @@ nerd:
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
 
+# Define default configuration file name
+CONFIG ?= config.yaml
+
+# make start [CONFIG=config.yaml]
 start: log-dir
 	docker run --rm \
 		--add-host host.docker.internal:host-gateway \
-		-v $$(pwd)/config.yaml:/etc/otelcol/config.yaml \
+		-v $$(pwd)/$(CONFIG):/etc/otelcol/config.yaml \
 		-v $$HOME/logs:/var/log/otelcol \
 		-p 4317:4317 -p 4318:4318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
@@ -55,7 +59,7 @@ test-metrics:
 	uv run python example_custom_metrics.py
 
 # Output log entry for filelog reciver test
-test-logs:
+filelog:
 	echo "$$(date +%Y-%m-%dT%H:%M:%S) DEBUG test debug message" >> $$HOME/logs/test.log
 	echo "$$(date +%Y-%m-%dT%H:%M:%S) INFO test info message" >> $$HOME/logs/test.log
 	echo "$$(date +%Y-%m-%dT%H:%M:%S) ERROR test error message" >> $$HOME/logs/test.log
