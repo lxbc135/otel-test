@@ -10,7 +10,7 @@ nerd:
 # Define default configuration file name
 CONFIG ?= config.yaml
 
-# make start [CONFIG=config.yaml]
+# make start [CONFIG=another.yaml]
 start: log-dir
 	docker run --rm \
 		--add-host host.docker.internal:host-gateway \
