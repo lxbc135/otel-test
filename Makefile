@@ -1,3 +1,6 @@
+# Define default configuration file name
+CONFIG ?= config.yaml
+
 nerd:
 	nerdctl run --rm \
 		--add-host host.docker.internal:host-gateway \
@@ -6,9 +9,6 @@ nerd:
 		-p 4317:4317 -p 4318:4318 \
 		ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest \
 		--config /etc/otelcol/config.yaml
-
-# Define default configuration file name
-CONFIG ?= config.yaml
 
 # make start [CONFIG=another.yaml]
 start: log-dir
