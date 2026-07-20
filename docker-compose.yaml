@@ -1,0 +1,33 @@
+# Run OpenTelemetry Collector in OpenAgent Management Protocol (OpAMP)
+version: '3.8'
+
+services:
+  # Mock OpAMP Server for UI/Management control plane
+  opamp-server:
+    image: ghcr.io/open-telemetry/opamp-go/opamp-server-example:latest
+    ports:
+      - "4320:4320" # OpAMP WebSocket backend port
+      - "4321:4321" # OpAMP Web UI dashboard
+    networks:
+      - opamp-net
+
+  # Our OpAMP Supervised OTel Collector
+  otel-collector:
+    build: .
+    volumes:
+      # If the supervisor receives a remote config update, it writes it to disk.
+      # Persistent named volumes ensure it survives container restarts.
+      - otelcol-data:/var/lib/otelcol
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    depends_on:
+      - opamp-server
+    networks:
+      - opamp-net
+
+networks:
+  opamp-net:
+
+volumes:
+  otelcol-data:

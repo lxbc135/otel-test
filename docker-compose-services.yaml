@@ -1,3 +1,4 @@
+# Run Collector, Prometheus, Tempo, and Grafana
 version: '3.8'
 
 services:
