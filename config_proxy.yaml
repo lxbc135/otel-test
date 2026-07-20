@@ -1,0 +1,35 @@
+# Collector Proxy (Sender) in collector pipeline
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+      http:
+        endpoint: "0.0.0.0:4318"
+
+processors:
+  batch:
+
+exporters:
+  # This configures the forwarding mechanism
+  otlp:
+    endpoint: "collector_backend:14317" # add "1" prefix to normal 4317 for gRPC or 4318 for HTTP
+    tls:
+      insecure: true # Set to false and configure certificates if using TLS
+  debug:
+    verbosity: detailed # basic, normal, detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp, debug]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp, debug]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp, debug]
