@@ -67,3 +67,11 @@ filelog:
 # Run collector supervised by OpAMP
 opamp:
 	docker compose up --build -d
+
+# View OpAMP supervisor log
+supervisor-log:
+	docker compose logs -f
+
+# View OpAMP-supervised collector log
+otelcol-log:
+	docker compose exec otel-collector tail -f /var/lib/otelcol/agent.log
